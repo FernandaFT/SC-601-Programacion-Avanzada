@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programación Avanzada</title>
+
+    <link href="~/Template/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Template/css/lineicons.css" rel="stylesheet" />
+    <link href="~/Template/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Template/css/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Template/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+    <div class="overlay"></div>
+
+    <main class="main-wrapper main-wrapper-externo">
+        <header class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-6">
+                        <div class="header-left d-flex align-items-center">
+                            <div class="menu-toggle-btn mr-15">
+                                <div class="navbar-logo">
+                                    <a href="index.html">
+                                        <img src="~/Template/images/logo.svg" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="section">
+                <div class="title-wrapper">
+                    @RenderBody()
+                </div>
+        </section>
+    </main>
+
+    <script src="~/Template/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Template/js/Chart.min.js"></script>
+    <script src="~/Template/js/dynamic-pie-chart.js"></script>
+    <script src="~/Template/js/moment.min.js"></script>
+    <script src="~/Template/js/fullcalendar.js"></script>
+    <script src="~/Template/js/jvectormap.min.js"></script>
+    <script src="~/Template/js/world-merc.js"></script>
+    <script src="~/Template/js/polyfill.js"></script>
+    <script src="~/Template/js/main.js"></script>
+</body>
+</html>
