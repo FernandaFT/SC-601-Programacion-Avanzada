@@ -3307,6 +3307,10 @@ h6,
   max-width: 100%;
   margin: auto;
 }
+.cover-image-form img {
+    width: 79% !important;
+}
+
 .auth-cover-wrapper .auth-cover .cover-image img {
   width: 100%;
 }
@@ -3859,7 +3863,10 @@ h6,
     transform: translateX(0);
   }
 }
-
+.main-wrapper-externo {
+    margin-left: 0px !important;
+    padding: 0px!important;
+}
 .main-wrapper {
   -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;

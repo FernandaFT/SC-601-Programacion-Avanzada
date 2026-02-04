@@ -1,0 +1,60 @@
+﻿
+@model KN_WEB.Models.UsuarioModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+}
+
+<div class="row g-0 auth-row">
+    <div class="col-lg-6">
+        <div class="auth-cover-wrapper bg-primary-100">
+            <div class="auth-cover">
+                <div class="title text-center">
+                    <h1 class="text-primary mb-10">Bienvenidos</h1>
+                    <p class="text-medium">
+                        Te enviaremos un correo electrónico
+                    </p>
+                </div>
+                <div class="cover-image-form">
+                    <img src="~/Template/images/signin-image.svg" alt="" />
+                </div>
+                <div class="shape-image">
+                    <img src="~/Template/images/shape.svg" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="signin-wrapper">
+            <div class="form-wrapper">
+                <h3 class="mb-15">Recuperar el Acceso</h3>
+
+                @using (Html.BeginForm("RecuperarContrasenna", "Home"))
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-style-1">
+                                <label>Identificación</label>
+                                @Html.TextBoxFor(m => m.Identificacion, new { @placeholder = "Identificación" })
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="button-group d-flex justify-content-center flex-wrap">
+                                <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
+                                    Procesar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="singin-option pt-40">
+                    <p class="text-sm text-medium text-dark text-center">
+                        Ya tiene una cuenta?
+                        <a href="@Url.Action("Login", "Home")">Iniciar Sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
