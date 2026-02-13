@@ -1,4 +1,5 @@
-﻿using KN_WEB.Models;
+﻿using KN_WEB.EntityFramework;
+using KN_WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,18 @@ namespace KN_WEB.Controllers
         [HttpPost]
         public ActionResult Login(UsuarioModel modelo)
         {
-            return View();
+            using (var context = new KN_DBEntities())
+            {
+                var result = context.tUsuario.Where(p => p.Identificacion == modelo.Identificacion
+                                                                && p.Contrasenna == modelo.Contrasenna).FirstOrDefault();
+                if (result == null)
+                {
+                    ViewBag.Mensaje = "Usuario o Contraseña incorrecta.";
+                    return View();
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
         }
         #endregion
 
@@ -37,7 +49,19 @@ namespace KN_WEB.Controllers
         [HttpPost]
         public ActionResult Registro(UsuarioModel model)
         {
-            return View();
+            using (var context = new KN_DBEntities())
+            {
+                var tabla = new tUsuario
+                {
+                    Identificacion = model.Identificacion,
+                    Nombre = model.Nombre,
+                    Contrasenna = model.Contrasenna 
+                };
+
+                context.tUsuario.Add(tabla);
+                context.SaveChanges();
+            }
+                return View();
         }
         #endregion
 

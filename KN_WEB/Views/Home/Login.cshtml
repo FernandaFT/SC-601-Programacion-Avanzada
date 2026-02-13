@@ -28,7 +28,7 @@
             <div class="form-wrapper">
                 <h3 class="mb-15">Inciar Sesión</h3>
 
-                @using(Html.BeginForm("Login", "Home"))
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post, new {@id= "FormLogin" }))
                 {
                     <div class="row">
                         <div class="col-12">
@@ -42,6 +42,10 @@
                             <div class="input-style-1">
                                 <label>Contraseña</label>
                                 @Html.TextBoxFor(m => m.Contrasenna, new { @type = "password", @placeholder = "Contraseña" })
+
+                                <div class="text-danger">
+                                    @ViewBag.Mensaje
+                                </div>
                             </div>
                         </div>
 
@@ -72,3 +76,4 @@
         </div>
     </div>
 </div>
+<script src="~/Template/js/login.js"></script>

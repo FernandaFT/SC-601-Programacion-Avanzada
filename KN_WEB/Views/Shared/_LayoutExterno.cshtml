@@ -11,6 +11,9 @@
     <link href="~/Template/css/materialdesignicons.min.css" rel="stylesheet" />
     <link href="~/Template/css/fullcalendar.css" rel="stylesheet" />
     <link href="~/Template/css/main.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 </head>
 <body>
     
@@ -27,7 +30,7 @@
                         <div class="header-left d-flex align-items-center">
                             <div class="menu-toggle-btn mr-15">
                                 <div class="navbar-logo">
-                                    <a href="index.html">
+                                    <a href="@Url.Action("Login", "Home")">
                                         <img src="~/Template/images/logo.svg" />
                                     </a>
                                 </div>
