@@ -28,20 +28,27 @@
             <div class="form-wrapper">
                 <h3 class="mb-15">Crear una cuenta</h3>
 
-                @using(Html.BeginForm("Registro", "Home"))
+                @using (Html.BeginForm("Registro", "Home", FormMethod.Post, new { @id = "FormRegistro" }))
                 {
                     <div class="row">
                         <div class="col-12">
                             <div class="input-style-1">
                                 <label>Identificación</label>
-                                @Html.TextBoxFor(m => m.Identificacion, new { @placeholder = "Identificación" })
+                                @Html.TextBoxFor(m => m.Identificacion, new { @placeholder = "Identificación", @onkeyup ="ConsultarNombre()"})
                             </div>
                         </div>
 
                         <div class="col-12">
                             <div class="input-style-1">
                                 <label>Nombre</label>
-                                @Html.TextBoxFor(m => m.Nombre, new { @placeholder = "Nombre" })
+                                @Html.TextBoxFor(m => m.Nombre, new { @placeholder = "Nombre", @readOnly = "true", @class= "soloLectura" })
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="input-style-1">
+                                <label>Correo Electrónico</label>
+                                @Html.TextBoxFor(m => m.CorreoElectronico, new { @placeholder = "Correo Electrónico" })
                             </div>
                         </div>
 
@@ -71,3 +78,4 @@
         </div>
     </div>
 </div>
+<script src="~/Template/js/funciones/registro.js"></script>

@@ -1,9 +1,6 @@
 ﻿using KN_WEB.EntityFramework;
 using KN_WEB.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KN_WEB.Controllers
@@ -27,14 +24,19 @@ namespace KN_WEB.Controllers
         {
             using (var context = new KN_DBEntities())
             {
-                var result = context.tUsuario.Where(p => p.Identificacion == modelo.Identificacion
-                                                                && p.Contrasenna == modelo.Contrasenna).FirstOrDefault();
+                //var result = context.tUsuario.Where(p => p.CorreoElectronico == modelo.CorreoElectronico
+                //                                                && p.Contrasenna == modelo.Contrasenna
+                //                                                && p.Estado == true).FirstOrDefault();
+                
+                var result = context.IniciarSesion(modelo.CorreoElectronico, modelo.Contrasenna).FirstOrDefault();
+
                 if (result == null)
                 {
-                    ViewBag.Mensaje = "Usuario o Contraseña incorrecta.";
+                    ViewBag.Mensaje = "Su información no se autenticó correctamente.";
                     return View();
                 }
 
+                Session["Nombre"] = result.Nombre;
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -51,17 +53,26 @@ namespace KN_WEB.Controllers
         {
             using (var context = new KN_DBEntities())
             {
-                var tabla = new tUsuario
-                {
-                    Identificacion = model.Identificacion,
-                    Nombre = model.Nombre,
-                    Contrasenna = model.Contrasenna 
-                };
+                //var tabla = new tUsuario
+                //{
+                //    Identificacion = model.Identificacion,
+                //    Nombre = model.Nombre,
+                //    Contrasenna = model.Contrasenna,
+                //    CorreoElectronico = model.CorreoElectronico,
+                //    Estado = true
+                //};
 
-                context.tUsuario.Add(tabla);
-                context.SaveChanges();
-            }
-                return View();
+                //context.tUsuario.Add(tabla);
+                //context.SaveChanges();
+                var result = context.RegistrarUsuario(model.Identificacion, model.Contrasenna, model.Nombre, model.CorreoElectronico);
+
+                if(result <= 0 )
+                {
+                    ViewBag.Mensaje = "Su información no se registró correctamente.";
+                    return View();
+                }
+                return RedirectToAction("Login", "Home");
+            }           
         }
         #endregion
 
