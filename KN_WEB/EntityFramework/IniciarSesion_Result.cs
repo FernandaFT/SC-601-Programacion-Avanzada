@@ -13,7 +13,11 @@ namespace KN_WEB.EntityFramework
     
     public partial class IniciarSesion_Result
     {
-        public int Identificacion { get; set; }
+        public int Consecutivo { get; set; }
+        public string Identificacion { get; set; }
         public string Nombre { get; set; }
+        public string CorreoElectronico { get; set; }
+        public int ConsecutivoRol { get; set; }
+        public string Descripcion { get; set; }
     }
 }
