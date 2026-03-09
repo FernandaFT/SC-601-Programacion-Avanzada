@@ -27,7 +27,22 @@ namespace KN_WEB.EntityFramework
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tRol> tRol { get; set; }
+        public virtual DbSet<tServicio> tServicio { get; set; }
         public virtual DbSet<tUsuario> tUsuario { get; set; }
+    
+        public virtual int ActualizarContrasenna(string contrasenna, Nullable<int> consecutivo)
+        {
+            var contrasennaParameter = contrasenna != null ?
+                new ObjectParameter("Contrasenna", contrasenna) :
+                new ObjectParameter("Contrasenna", typeof(string));
+    
+            var consecutivoParameter = consecutivo.HasValue ?
+                new ObjectParameter("Consecutivo", consecutivo) :
+                new ObjectParameter("Consecutivo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarContrasenna", contrasennaParameter, consecutivoParameter);
+        }
     
         public virtual ObjectResult<IniciarSesion_Result> IniciarSesion(string correoElectronico, string contrasenna)
         {
@@ -61,6 +76,15 @@ namespace KN_WEB.EntityFramework
                 new ObjectParameter("CorreoElectronico", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarUsuario", identificacionParameter, contrasennaParameter, nombreParameter, correoElectronicoParameter);
+        }
+    
+        public virtual ObjectResult<ValidarCorreo_Result> ValidarCorreo(string correoElectronico)
+        {
+            var correoElectronicoParameter = correoElectronico != null ?
+                new ObjectParameter("CorreoElectronico", correoElectronico) :
+                new ObjectParameter("CorreoElectronico", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ValidarCorreo_Result>("ValidarCorreo", correoElectronicoParameter);
         }
     }
 }
