@@ -1,5 +1,7 @@
 ﻿using KN_WEB.EntityFramework;
+using KN_WEB.Filters;
 using KN_WEB.Models;
+using KN_WEB.Services;
 using System;
 using System.Configuration;
 using System.IO;
@@ -14,6 +16,9 @@ namespace KN_WEB.Controllers
 {
     public class HomeController : Controller
     {
+        readonly Generales generales = new Generales();
+
+        [SesionActiva]
         [HttpGet]
         public ActionResult Index()
         {
@@ -45,7 +50,9 @@ namespace KN_WEB.Controllers
                     return View();
                 }
 
+                Session["Consecutivo"] = result.Consecutivo;
                 Session["Nombre"] = result.Nombre;
+                Session["CorreoElectronico"] = result.CorreoElectronico;
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -113,7 +120,7 @@ namespace KN_WEB.Controllers
                 }
 
                 //Se genera la contraseña nueva
-                var nuevaContrasenna = GenerarContrasena();
+                var nuevaContrasenna = generales.GenerarContrasena();
 
                 //Se actualiza la contraseña en la base de datos
                 var actualizacion = context.ActualizarContrasenna(nuevaContrasenna, result.Consecutivo);
@@ -132,54 +139,22 @@ namespace KN_WEB.Controllers
                     .Replace("{{NOMBRE_USUARIO}}", result.Nombre)
                     .Replace("{{NUEVA_CONTRASENA}}", nuevaContrasenna);
 
-                EnviarCorreo(result.CorreoElectronico, "Recuperar Acceso", htmlFinal);
+                generales.EnviarCorreo(result.CorreoElectronico, "Recuperar Acceso", htmlFinal);
                 return RedirectToAction("Login", "Home");
             }
         }
 
         #endregion
 
-        private string GenerarContrasena()
+        #region Cerrar Sesión
+        [SesionActiva]
+        [HttpGet]
+        public ActionResult CerrarSesion()
         {
-            int longitud = 8;
-            const string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            StringBuilder resultado = new StringBuilder(longitud);
-
-            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
-            {
-                byte[] bytes = new byte[1];
-                for (int i = 0; i < longitud; i++)
-                {
-                    rng.GetBytes(bytes);
-                    int index = bytes[0] % letras.Length;
-                    resultado.Append(letras[index]);
-                }
-            }
-
-            return resultado.ToString();
+            Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
-
-        private void EnviarCorreo(string destinatario, string asunto, string cuerpo)
-        {
-            var cuentaCorreo = ConfigurationManager.AppSettings["CuentaCorreo"];
-            var contrasennaCorreo = ConfigurationManager.AppSettings["contrasennaCorreo"];
-
-            using (MailMessage mail = new MailMessage())
-            {
-                mail.From = new MailAddress(cuentaCorreo);
-                mail.To.Add(destinatario);
-                mail.Subject = asunto;
-                mail.Body = cuerpo;
-                mail.IsBodyHtml = true;
-
-                using (SmtpClient smtp = new SmtpClient("smtp.office365.com", 587))
-                {
-                    smtp.Credentials = new NetworkCredential(cuentaCorreo, contrasennaCorreo);
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                }
-            }
-        }
+        #endregion
 
     }
 }
