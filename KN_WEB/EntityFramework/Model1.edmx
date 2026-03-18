@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KN_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KN_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tRol">
           <Key>
             <PropertyRef Name="Consecutivo" />
@@ -34,6 +34,7 @@
           <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
           <Property Name="ConsecutivoRol" Type="int" Nullable="false" />
+          <Property Name="ImagenUsuario" Type="varchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_tUsuario_tRol">
           <End Role="tRol" Type="Self.tRol" Multiplicity="1" />
@@ -73,7 +74,8 @@
             <End Role="tUsuario" EntitySet="tUsuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KN_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -107,6 +109,7 @@
           <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <Property Name="ConsecutivoRol" Type="Int32" Nullable="false" />
+          <Property Name="ImagenUsuario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tRol" Relationship="Self.FK_tUsuario_tRol" FromRole="tUsuario" ToRole="tRol" />
         </EntityType>
         <Association Name="FK_tUsuario_tRol">
@@ -144,7 +147,7 @@
             <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ValidarCorreo" ReturnType="Collection(KN_DBModel.ValidarCorreo_Result)">
-          <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
+            <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesion_Result">
@@ -154,6 +157,7 @@
           <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="ConsecutivoRol" Nullable="false" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ImagenUsuario" Nullable="true" MaxLength="500" />
         </ComplexType>
         <ComplexType Name="ValidarCorreo_Result">
           <Property Type="Int32" Name="Consecutivo" Nullable="false" />
@@ -197,6 +201,7 @@
                 <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="ConsecutivoRol" ColumnName="ConsecutivoRol" />
+                <ScalarProperty Name="ImagenUsuario" ColumnName="ImagenUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -210,6 +215,7 @@
                 <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
                 <ScalarProperty Name="ConsecutivoRol" ColumnName="ConsecutivoRol" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ImagenUsuario" ColumnName="ImagenUsuario" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

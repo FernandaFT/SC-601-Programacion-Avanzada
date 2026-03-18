@@ -53,6 +53,7 @@ namespace KN_WEB.Controllers
                 Session["Consecutivo"] = result.Consecutivo;
                 Session["Nombre"] = result.Nombre;
                 Session["CorreoElectronico"] = result.CorreoElectronico;
+                Session["ImagenUsuario"] = result.ImagenUsuario;
                 return RedirectToAction("Index", "Home");
             }
         }

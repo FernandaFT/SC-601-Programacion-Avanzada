@@ -30,7 +30,12 @@ namespace KN_WEB.Services
                 {
                     smtp.Credentials = new NetworkCredential(cuentaCorreo, contrasennaCorreo);
                     smtp.EnableSsl = true;
-                    smtp.Send(mail);
+
+                    if (!string.IsNullOrEmpty(contrasennaCorreo))
+                    {
+                        smtp.Send(mail);
+                    }
+                    
                 }
             }
         }

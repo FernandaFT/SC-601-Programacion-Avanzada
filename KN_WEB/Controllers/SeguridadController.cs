@@ -17,6 +17,7 @@ namespace KN_WEB.Controllers
     {
         readonly Generales generales = new Generales();
 
+        #region Cambiar Accesos
         [HttpGet]
         public ActionResult CambiarAcceso()
         {
@@ -52,5 +53,71 @@ namespace KN_WEB.Controllers
                 return RedirectToAction("CerrarSesion", "Home");
             }
         }
+
+        #endregion
+
+        #region Cambiar Perfil
+        [HttpGet]
+        public ActionResult CambiarPerfil()
+        {
+            using (var context = new KN_DBEntities())
+            {
+                var consecutivo = int.Parse(Session["Consecutivo"].ToString());
+                var result = context.tUsuario.Where(p => p.Consecutivo == consecutivo).FirstOrDefault();
+
+                var dto = new PerfilModel
+                {
+                    Identificacion = result.Identificacion,
+                    Nombre = result.Nombre,
+                    CorreoElectronico = result.CorreoElectronico
+                };
+
+                return View(dto);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CambiarPerfil(PerfilModel model, HttpPostedFileBase ImagenUsuario)
+        {
+            using (var context = new KN_DBEntities())
+            {
+                var consecutivo = int.Parse(Session["Consecutivo"].ToString());
+                var result = context.tUsuario.Where(p => p.Consecutivo == consecutivo).FirstOrDefault();
+
+                if (result != null)
+                {
+                    result.Identificacion = model.Identificacion;
+                    result.Nombre = model.Nombre;
+                    result.CorreoElectronico = model.CorreoElectronico;
+
+                    if (ImagenUsuario != null && ImagenUsuario.ContentLength > 0)
+                    {
+                        string extension = Path.GetExtension(ImagenUsuario.FileName);
+                        string fileName = consecutivo + extension;
+                        string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
+                        string path = Path.Combine(folder, fileName);
+
+                        if (!Directory.Exists(folder))
+                            Directory.CreateDirectory(folder);
+
+                        ImagenUsuario.SaveAs(path);
+                        result.ImagenUsuario = "/Uploads/" + fileName;
+                    }
+
+                    context.SaveChanges();
+                }
+
+                Session["Nombre"] = model.Nombre;
+                Session["CorreoElectronico"] = model.CorreoElectronico;
+
+                if (ImagenUsuario != null && ImagenUsuario.ContentLength > 0)
+                    Session["ImagenUsuario"] = result.ImagenUsuario;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        #endregion
     }
 }

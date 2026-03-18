@@ -20,5 +20,22 @@ namespace KN_WEB.Controllers
                 return View(result);
             }
         }
+
+        [HttpGet]
+        public ActionResult CambiarEstado(int q)
+        {
+            using (var context = new KN_DBEntities())
+            {
+                var result = context.tServicio.Where(p => p.Consecutivo == q).FirstOrDefault();
+
+                if (result != null)
+                {
+                    result.Estado = result.Estado == 1 ? 0 : 1;
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("ConsultarServicios", "Servicio");
+            }
+        }
     }
 }
