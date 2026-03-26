@@ -19,6 +19,6 @@ namespace KN_WEB.EntityFramework
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
         public int Estado { get; set; }
-        public string Imagen { get; set; }
+        public string Video { get; set; }
     }
 }

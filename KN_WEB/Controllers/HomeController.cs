@@ -22,7 +22,11 @@ namespace KN_WEB.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            using (var context = new KN_DBEntities())
+            {
+                var servicios = context.tServicio.Where(p => p.Estado == 1).ToList();
+                return View(servicios);
+            }
         }
 
         #region Iniciar Sesión
@@ -69,7 +73,7 @@ namespace KN_WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registro(UsuarioModel model)
+        public ActionResult Registro(UsuarioModel modelo)
         {
             using (var context = new KN_DBEntities())
             {
@@ -85,7 +89,7 @@ namespace KN_WEB.Controllers
                 //context.tUsuario.Add(tabla);
                 //var result = context.SaveChanges();
 
-                var result = context.RegistrarUsuario(model.Identificacion, model.Contrasenna, model.Nombre, model.CorreoElectronico);
+                var result = context.RegistrarUsuario(modelo.Identificacion, modelo.Contrasenna, modelo.Nombre, modelo.CorreoElectronico);
 
                 if (result <= 0)
                 {

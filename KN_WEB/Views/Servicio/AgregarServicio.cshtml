@@ -1,0 +1,65 @@
+﻿@model KN_WEB.EntityFramework.tServicio
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="section-title mb-3">
+            <h4>Agregar Servicio</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card-style">
+
+            @if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-success">@ViewBag.Mensaje</div>
+            }
+
+            @using (Html.BeginForm("AgregarServicio", "Servicio", FormMethod.Post, new { @id = "FormServicio" }))
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-style-1">
+                            <label>Nombre</label>
+                            @Html.TextBoxFor(m => m.Nombre, new { @placeholder = "Nombre" })
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="input-style-1">
+                            <label>Descripción</label>
+                            @Html.TextAreaFor(m => m.Descripcion, new { @placeholder = "Descripción", @rows = "3" })
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="input-style-1">
+                            <label>Precio</label>
+                            @Html.TextBoxFor(m => m.Precio, new { @placeholder = "Precio", data_val = "false" })
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="input-style-1">
+                            <label>Video</label>
+                            @Html.TextBoxFor(m => m.Video, new { @placeholder = "Video" })
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <div class="button-group d-flex justify-content-end">
+                            <button type="submit" class="main-btn primary-btn btn-hover btn-sm">
+                                Procesar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Template/js/funciones/Servicio.js"></script>

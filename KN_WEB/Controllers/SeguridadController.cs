@@ -25,15 +25,15 @@ namespace KN_WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult CambiarAcceso(SeguridadModel model)
+        public ActionResult CambiarAcceso(SeguridadModel modelo)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return View(modelo);
 
             using (var context = new KN_DBEntities())
             {
                 var consecutivoSesion = int.Parse(Session["Consecutivo"].ToString());
-                var actualizacion = context.ActualizarContrasenna(model.ContrasennaNueva, consecutivoSesion);
+                var actualizacion = context.ActualizarContrasenna(modelo.ContrasennaNueva, consecutivoSesion);
 
                 if (actualizacion <= 0)
                 {
@@ -77,7 +77,7 @@ namespace KN_WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult CambiarPerfil(PerfilModel model, HttpPostedFileBase ImagenUsuario)
+        public ActionResult CambiarPerfil(PerfilModel modelo, HttpPostedFileBase ImagenUsuario)
         {
             using (var context = new KN_DBEntities())
             {
@@ -86,9 +86,9 @@ namespace KN_WEB.Controllers
 
                 if (result != null)
                 {
-                    result.Identificacion = model.Identificacion;
-                    result.Nombre = model.Nombre;
-                    result.CorreoElectronico = model.CorreoElectronico;
+                    result.Identificacion = modelo.Identificacion;
+                    result.Nombre = modelo.Nombre;
+                    result.CorreoElectronico = modelo.CorreoElectronico;
 
                     if (ImagenUsuario != null && ImagenUsuario.ContentLength > 0)
                     {
@@ -107,8 +107,8 @@ namespace KN_WEB.Controllers
                     context.SaveChanges();
                 }
 
-                Session["Nombre"] = model.Nombre;
-                Session["CorreoElectronico"] = model.CorreoElectronico;
+                Session["Nombre"] = modelo.Nombre;
+                Session["CorreoElectronico"] = modelo.CorreoElectronico;
 
                 if (ImagenUsuario != null && ImagenUsuario.ContentLength > 0)
                     Session["ImagenUsuario"] = result.ImagenUsuario;

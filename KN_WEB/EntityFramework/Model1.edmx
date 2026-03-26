@@ -21,7 +21,7 @@
           <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
-          <Property Name="Imagen" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Video" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="tUsuario">
           <Key>
@@ -96,7 +96,7 @@
           <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Estado" Type="Int32" Nullable="false" />
-          <Property Name="Imagen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Video" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="tUsuario">
           <Key>
@@ -187,7 +187,7 @@
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Video" ColumnName="Video" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

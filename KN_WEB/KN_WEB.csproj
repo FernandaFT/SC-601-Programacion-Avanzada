@@ -211,6 +211,7 @@
     <Content Include="Template\js\funciones\recuperarContrasenna.js" />
     <Content Include="Template\js\funciones\cambiarPerfil.js" />
     <Content Include="Template\js\funciones\registro.js" />
+    <Content Include="Template\js\funciones\servicio.js" />
     <Content Include="Template\js\jvectormap.min.js" />
     <Content Include="Template\js\funciones\login.js" />
     <Content Include="Template\js\main.js" />
@@ -254,6 +255,8 @@
     <Content Include="Views\Servicio\ConsultarServicios.cshtml" />
     <Content Include="Views\Seguridad\CambiarAcceso.cshtml" />
     <Content Include="Views\Seguridad\CambiarPerfil.cshtml" />
+    <Content Include="Views\Servicio\ActualizarServicio.cshtml" />
+    <Content Include="Views\Servicio\AgregarServicio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
