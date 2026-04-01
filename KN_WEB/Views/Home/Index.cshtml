@@ -1,4 +1,9 @@
-﻿@model List<KN_WEB.EntityFramework.tServicio>
+﻿@model List<KN_WEB.Models.ServicioModel>
+
+@{
+    string[] diasSemana = { "", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+}
+
 
 <div class="row">
     <div class="col-12">
@@ -14,7 +19,6 @@
         <div class="col-lg-4 col-md-6 col-12">
             <div class="card-style h-100">
 
-
                 <div class="mb-3" style="border-radius: 6px; overflow: hidden;">
                     <iframe width="100%" height="200" src="@item.Video"
                             frameborder="0" allowfullscreen
@@ -25,10 +29,33 @@
                 <h5 class="fw-600 mb-2">@item.Nombre</h5>
                 <p class="text-sm mb-3" style="color: #5d657b;">@item.Descripcion</p>
 
-                <div class="d-flex justify-content-between align-items-center mt-auto">
+                <div class="mb-3">
+                    <label class="form-label text-sm fw-500 mb-2">Seleccionar Horario</label>
+                    <select class="form-select form-select-sm horario-dropdown" data-servicio="@item.Consecutivo">
+                        <option selected disabled>-- Elige un horario --</option>
+                        @foreach (var horario in item.Horarios.OrderBy(h => h.FechaDisponible).ThenBy(h => h.HoraInicio))
+                        {
+                            <option value="@horario.Consecutivo"
+                                    data-fecha="@horario.FechaDisponible.ToString("yyyy-MM-dd")"
+                                    data-horaInicio="@horario.HoraInicio"
+                                    data-horaFin="@horario.HoraFin">
+                                @horario.FechaDisponible.ToString("dddd, dd/MM/yyyy") - @horario.HoraInicio a @horario.HoraFin
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-auto gap-2">
                     <span class="fw-600" style="color: #365CF5; font-size: 18px;">
                         &#x20A1; @item.Precio.ToString("N2")
                     </span>
+
+                    <button class="btn btn-primary btn-sm rounded-3 px-3 py-2 fw-500 btn-agregar"
+                            data-servicio="@item.Consecutivo" onclick="AgregarAlCarrito(this)">
+                        <i class="fa-solid fa-cart-plus me-2"></i>
+                        Agregar
+                    </button>
+
                 </div>
 
             </div>

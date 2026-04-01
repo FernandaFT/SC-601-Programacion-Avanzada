@@ -5,6 +5,27 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="KN_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tCarrito">
+          <Key>
+            <PropertyRef Name="Consecutivo" />
+          </Key>
+          <Property Name="Consecutivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsecutivoUsuario" Type="int" Nullable="false" />
+          <Property Name="ConsecutivoServicio" Type="int" Nullable="false" />
+          <Property Name="FechaHoraCarrito" Type="datetime" Nullable="false" />
+          <Property Name="ConsecutivoHorario" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tHorario">
+          <Key>
+            <PropertyRef Name="Consecutivo" />
+          </Key>
+          <Property Name="Consecutivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsecutivoServicio" Type="int" Nullable="false" />
+          <Property Name="FechaDisponible" Type="date" Nullable="false" />
+          <Property Name="HoraInicio" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="HoraFin" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
         <EntityType Name="tRol">
           <Key>
             <PropertyRef Name="Consecutivo" />
@@ -36,6 +57,42 @@
           <Property Name="ConsecutivoRol" Type="int" Nullable="false" />
           <Property Name="ImagenUsuario" Type="varchar" MaxLength="500" />
         </EntityType>
+        <Association Name="FK_tCarrito_tServicio">
+          <End Role="tServicio" Type="Self.tServicio" Multiplicity="1" />
+          <End Role="tCarrito" Type="Self.tCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tServicio">
+              <PropertyRef Name="Consecutivo" />
+            </Principal>
+            <Dependent Role="tCarrito">
+              <PropertyRef Name="ConsecutivoServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tCarrito_tUsuario">
+          <End Role="tUsuario" Type="Self.tUsuario" Multiplicity="1" />
+          <End Role="tCarrito" Type="Self.tCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUsuario">
+              <PropertyRef Name="Consecutivo" />
+            </Principal>
+            <Dependent Role="tCarrito">
+              <PropertyRef Name="ConsecutivoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tHorario_tServicio">
+          <End Role="tServicio" Type="Self.tServicio" Multiplicity="1" />
+          <End Role="tHorario" Type="Self.tHorario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tServicio">
+              <PropertyRef Name="Consecutivo" />
+            </Principal>
+            <Dependent Role="tHorario">
+              <PropertyRef Name="ConsecutivoServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tUsuario_tRol">
           <End Role="tRol" Type="Self.tRol" Multiplicity="1" />
           <End Role="tUsuario" Type="Self.tUsuario" Multiplicity="*" />
@@ -62,13 +119,28 @@
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_ObtenerServiciosConHorariosDisponibles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ValidarCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="KN_DBModelStoreContainer">
+          <EntitySet Name="tCarrito" EntityType="Self.tCarrito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tHorario" EntityType="Self.tHorario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tRol" EntityType="Self.tRol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tServicio" EntityType="Self.tServicio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUsuario" EntityType="Self.tUsuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tCarrito_tServicio" Association="Self.FK_tCarrito_tServicio">
+            <End Role="tServicio" EntitySet="tServicio" />
+            <End Role="tCarrito" EntitySet="tCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tCarrito_tUsuario" Association="Self.FK_tCarrito_tUsuario">
+            <End Role="tUsuario" EntitySet="tUsuario" />
+            <End Role="tCarrito" EntitySet="tCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tHorario_tServicio" Association="Self.FK_tHorario_tServicio">
+            <End Role="tServicio" EntitySet="tServicio" />
+            <End Role="tHorario" EntitySet="tHorario" />
+          </AssociationSet>
           <AssociationSet Name="FK_tUsuario_tRol" Association="Self.FK_tUsuario_tRol">
             <End Role="tRol" EntitySet="tRol" />
             <End Role="tUsuario" EntitySet="tUsuario" />
@@ -79,6 +151,30 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KN_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tCarrito">
+          <Key>
+            <PropertyRef Name="Consecutivo" />
+          </Key>
+          <Property Name="Consecutivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsecutivoUsuario" Type="Int32" Nullable="false" />
+          <Property Name="ConsecutivoServicio" Type="Int32" Nullable="false" />
+          <Property Name="FechaHoraCarrito" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ConsecutivoHorario" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tServicio" Relationship="Self.FK_tCarrito_tServicio" FromRole="tCarrito" ToRole="tServicio" />
+          <NavigationProperty Name="tUsuario" Relationship="Self.FK_tCarrito_tUsuario" FromRole="tCarrito" ToRole="tUsuario" />
+        </EntityType>
+        <EntityType Name="tHorario">
+          <Key>
+            <PropertyRef Name="Consecutivo" />
+          </Key>
+          <Property Name="Consecutivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsecutivoServicio" Type="Int32" Nullable="false" />
+          <Property Name="FechaDisponible" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HoraInicio" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HoraFin" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tServicio" Relationship="Self.FK_tHorario_tServicio" FromRole="tHorario" ToRole="tServicio" />
+        </EntityType>
         <EntityType Name="tRol">
           <Key>
             <PropertyRef Name="Consecutivo" />
@@ -97,6 +193,8 @@
           <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <Property Name="Video" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tCarrito" Relationship="Self.FK_tCarrito_tServicio" FromRole="tServicio" ToRole="tCarrito" />
+          <NavigationProperty Name="tHorario" Relationship="Self.FK_tHorario_tServicio" FromRole="tServicio" ToRole="tHorario" />
         </EntityType>
         <EntityType Name="tUsuario">
           <Key>
@@ -110,8 +208,45 @@
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <Property Name="ConsecutivoRol" Type="Int32" Nullable="false" />
           <Property Name="ImagenUsuario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tCarrito" Relationship="Self.FK_tCarrito_tUsuario" FromRole="tUsuario" ToRole="tCarrito" />
           <NavigationProperty Name="tRol" Relationship="Self.FK_tUsuario_tRol" FromRole="tUsuario" ToRole="tRol" />
         </EntityType>
+        <Association Name="FK_tCarrito_tServicio">
+          <End Role="tServicio" Type="Self.tServicio" Multiplicity="1" />
+          <End Role="tCarrito" Type="Self.tCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tServicio">
+              <PropertyRef Name="Consecutivo" />
+            </Principal>
+            <Dependent Role="tCarrito">
+              <PropertyRef Name="ConsecutivoServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tCarrito_tUsuario">
+          <End Role="tUsuario" Type="Self.tUsuario" Multiplicity="1" />
+          <End Role="tCarrito" Type="Self.tCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUsuario">
+              <PropertyRef Name="Consecutivo" />
+            </Principal>
+            <Dependent Role="tCarrito">
+              <PropertyRef Name="ConsecutivoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tHorario_tServicio">
+          <End Role="tServicio" Type="Self.tServicio" Multiplicity="1" />
+          <End Role="tHorario" Type="Self.tHorario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tServicio">
+              <PropertyRef Name="Consecutivo" />
+            </Principal>
+            <Dependent Role="tHorario">
+              <PropertyRef Name="ConsecutivoServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tUsuario_tRol">
           <End Role="tRol" Type="Self.tRol" Multiplicity="1" />
           <End Role="tUsuario" Type="Self.tUsuario" Multiplicity="*" />
@@ -125,9 +260,23 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="KN_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tCarrito" EntityType="Self.tCarrito" />
+          <EntitySet Name="tHorario" EntityType="Self.tHorario" />
           <EntitySet Name="tRol" EntityType="Self.tRol" />
           <EntitySet Name="tServicio" EntityType="Self.tServicio" />
           <EntitySet Name="tUsuario" EntityType="Self.tUsuario" />
+          <AssociationSet Name="FK_tCarrito_tServicio" Association="Self.FK_tCarrito_tServicio">
+            <End Role="tServicio" EntitySet="tServicio" />
+            <End Role="tCarrito" EntitySet="tCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tCarrito_tUsuario" Association="Self.FK_tCarrito_tUsuario">
+            <End Role="tUsuario" EntitySet="tUsuario" />
+            <End Role="tCarrito" EntitySet="tCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tHorario_tServicio" Association="Self.FK_tHorario_tServicio">
+            <End Role="tServicio" EntitySet="tServicio" />
+            <End Role="tHorario" EntitySet="tHorario" />
+          </AssociationSet>
           <AssociationSet Name="FK_tUsuario_tRol" Association="Self.FK_tUsuario_tRol">
             <End Role="tRol" EntitySet="tRol" />
             <End Role="tUsuario" EntitySet="tUsuario" />
@@ -146,6 +295,7 @@
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_ObtenerServiciosConHorariosDisponibles" ReturnType="Collection(KN_DBModel.sp_ObtenerServiciosConHorariosDisponibles_Result)" />
           <FunctionImport Name="ValidarCorreo" ReturnType="Collection(KN_DBModel.ValidarCorreo_Result)">
             <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
           </FunctionImport>
@@ -159,6 +309,19 @@
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ImagenUsuario" Nullable="true" MaxLength="500" />
         </ComplexType>
+        <ComplexType Name="sp_ObtenerServiciosConHorariosDisponibles_Result">
+          <Property Type="Int32" Name="Consecutivo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="Decimal" Name="Precio" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="Video" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="ConsecutivoHorario" Nullable="false" />
+          <Property Type="Int32" Name="ConsecutivoServicio" Nullable="false" />
+          <Property Type="DateTime" Name="FechaDisponible" Nullable="false" />
+          <Property Type="String" Name="HoraInicio" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="HoraFin" Nullable="false" MaxLength="5" />
+        </ComplexType>
         <ComplexType Name="ValidarCorreo_Result">
           <Property Type="Int32" Name="Consecutivo" Nullable="false" />
           <Property Type="String" Name="Identificacion" Nullable="false" MaxLength="15" />
@@ -171,6 +334,29 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="KN_DBModelStoreContainer" CdmEntityContainer="KN_DBEntities">
+          <EntitySetMapping Name="tCarrito">
+            <EntityTypeMapping TypeName="KN_DBModel.tCarrito">
+              <MappingFragment StoreEntitySet="tCarrito">
+                <ScalarProperty Name="Consecutivo" ColumnName="Consecutivo" />
+                <ScalarProperty Name="ConsecutivoUsuario" ColumnName="ConsecutivoUsuario" />
+                <ScalarProperty Name="ConsecutivoServicio" ColumnName="ConsecutivoServicio" />
+                <ScalarProperty Name="FechaHoraCarrito" ColumnName="FechaHoraCarrito" />
+                <ScalarProperty Name="ConsecutivoHorario" ColumnName="ConsecutivoHorario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tHorario">
+            <EntityTypeMapping TypeName="KN_DBModel.tHorario">
+              <MappingFragment StoreEntitySet="tHorario">
+                <ScalarProperty Name="Consecutivo" ColumnName="Consecutivo" />
+                <ScalarProperty Name="ConsecutivoServicio" ColumnName="ConsecutivoServicio" />
+                <ScalarProperty Name="FechaDisponible" ColumnName="FechaDisponible" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tRol">
             <EntityTypeMapping TypeName="KN_DBModel.tRol">
               <MappingFragment StoreEntitySet="tRol">
@@ -220,6 +406,23 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RegistrarUsuario" FunctionName="KN_DBModel.Store.RegistrarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_ObtenerServiciosConHorariosDisponibles" FunctionName="KN_DBModel.Store.sp_ObtenerServiciosConHorariosDisponibles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KN_DBModel.sp_ObtenerServiciosConHorariosDisponibles_Result">
+                <ScalarProperty Name="Consecutivo" ColumnName="Consecutivo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Video" ColumnName="Video" />
+                <ScalarProperty Name="ConsecutivoHorario" ColumnName="ConsecutivoHorario" />
+                <ScalarProperty Name="ConsecutivoServicio" ColumnName="ConsecutivoServicio" />
+                <ScalarProperty Name="FechaDisponible" ColumnName="FechaDisponible" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ValidarCorreo" FunctionName="KN_DBModel.Store.ValidarCorreo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="KN_DBModel.ValidarCorreo_Result">

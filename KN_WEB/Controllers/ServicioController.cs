@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace KN_WEB.Controllers
 {
     [SesionActiva]
+    [PerfilAdmin]
     public class ServicioController : Controller
     {
         [HttpGet]

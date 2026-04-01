@@ -4,10 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="84974fc7368748608d666935f29dc5a4" Name="Diagram1">
-        <EntityTypeShape EntityType="KN_DBModel.tRol" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KN_DBModel.tServicio" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+      <Diagram DiagramId="51f265ebd7a444d5819056a8718361a7" Name="Diagram1">
+        <EntityTypeShape EntityType="KN_DBModel.tCarrito" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KN_DBModel.tHorario" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KN_DBModel.tRol" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KN_DBModel.tServicio" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KN_DBModel.tUsuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="KN_DBModel.FK_tCarrito_tServicio" ManuallyRouted="false" />
+        <AssociationConnector Association="KN_DBModel.FK_tCarrito_tUsuario" ManuallyRouted="false" />
+        <AssociationConnector Association="KN_DBModel.FK_tHorario_tServicio" ManuallyRouted="false" />
         <AssociationConnector Association="KN_DBModel.FK_tUsuario_tRol" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

@@ -24,7 +24,30 @@ namespace KN_WEB.Controllers
         {
             using (var context = new KN_DBEntities())
             {
-                var servicios = context.tServicio.Where(p => p.Estado == 1).ToList();
+                var resultadosSP = context.sp_ObtenerServiciosConHorariosDisponibles().ToList();
+
+                // Agrupar los resultados por servicio
+                var servicios = resultadosSP
+                    .GroupBy(x => x.Consecutivo)
+                    .Select(g => new ServicioModel
+                    {
+                        Consecutivo = g.Key,
+                        Nombre = g.First().Nombre,
+                        Descripcion = g.First().Descripcion,
+                        Precio = g.First().Precio,
+                        Estado = g.First().Estado,
+                        Video = g.First().Video,
+                        Horarios = g.Select(h => new HorarioModel
+                        {
+                            Consecutivo = h.ConsecutivoHorario,
+                            ConsecutivoServicio = h.ConsecutivoServicio,
+                            FechaDisponible = h.FechaDisponible,
+                            HoraInicio = h.HoraInicio,
+                            HoraFin = h.HoraFin
+                        }).ToList()
+                    })
+                    .ToList();
+
                 return View(servicios);
             }
         }
@@ -58,6 +81,8 @@ namespace KN_WEB.Controllers
                 Session["Nombre"] = result.Nombre;
                 Session["CorreoElectronico"] = result.CorreoElectronico;
                 Session["ImagenUsuario"] = result.ImagenUsuario;
+                Session["ConsecutivoRol"] = result.ConsecutivoRol;
+                Session["NombreRol"] = result.Descripcion;
                 return RedirectToAction("Index", "Home");
             }
         }

@@ -22,4 +22,25 @@ namespace KN_WEB.Filters
             base.OnActionExecuting(filterContext);
         }
     }
+
+    public class PerfilAdminAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var session = filterContext.HttpContext.Session;
+
+            if (session["ConsecutivoRol"].ToString() != "1")
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new System.Web.Routing.RouteValueDictionary(new
+                    {
+                        controller = "Home",
+                        action = "Index"
+                    })
+                );
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
+    }
 }

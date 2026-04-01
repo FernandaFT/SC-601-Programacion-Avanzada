@@ -10,27 +10,19 @@
 namespace KN_WEB.EntityFramework
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tServicio
+    public partial class sp_ObtenerServiciosConHorariosDisponibles_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tServicio()
-        {
-            this.tCarrito = new HashSet<tCarrito>();
-            this.tHorario = new HashSet<tHorario>();
-        }
-    
         public int Consecutivo { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
         public int Estado { get; set; }
         public string Video { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tCarrito> tCarrito { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tHorario> tHorario { get; set; }
+        public int ConsecutivoHorario { get; set; }
+        public int ConsecutivoServicio { get; set; }
+        public System.DateTime FechaDisponible { get; set; }
+        public string HoraInicio { get; set; }
+        public string HoraFin { get; set; }
     }
 }

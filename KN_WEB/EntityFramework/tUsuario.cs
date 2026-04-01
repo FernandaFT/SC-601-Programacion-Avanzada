@@ -14,6 +14,12 @@ namespace KN_WEB.EntityFramework
     
     public partial class tUsuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tUsuario()
+        {
+            this.tCarrito = new HashSet<tCarrito>();
+        }
+    
         public int Consecutivo { get; set; }
         public string Identificacion { get; set; }
         public string Contrasenna { get; set; }
@@ -23,6 +29,8 @@ namespace KN_WEB.EntityFramework
         public int ConsecutivoRol { get; set; }
         public string ImagenUsuario { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tCarrito> tCarrito { get; set; }
         public virtual tRol tRol { get; set; }
     }
 }

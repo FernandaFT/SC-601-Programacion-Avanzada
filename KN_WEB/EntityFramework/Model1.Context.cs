@@ -27,6 +27,8 @@ namespace KN_WEB.EntityFramework
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tCarrito> tCarrito { get; set; }
+        public virtual DbSet<tHorario> tHorario { get; set; }
         public virtual DbSet<tRol> tRol { get; set; }
         public virtual DbSet<tServicio> tServicio { get; set; }
         public virtual DbSet<tUsuario> tUsuario { get; set; }
@@ -76,6 +78,11 @@ namespace KN_WEB.EntityFramework
                 new ObjectParameter("CorreoElectronico", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarUsuario", identificacionParameter, contrasennaParameter, nombreParameter, correoElectronicoParameter);
+        }
+    
+        public virtual ObjectResult<sp_ObtenerServiciosConHorariosDisponibles_Result> sp_ObtenerServiciosConHorariosDisponibles()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ObtenerServiciosConHorariosDisponibles_Result>("sp_ObtenerServiciosConHorariosDisponibles");
         }
     
         public virtual ObjectResult<ValidarCorreo_Result> ValidarCorreo(string correoElectronico)
