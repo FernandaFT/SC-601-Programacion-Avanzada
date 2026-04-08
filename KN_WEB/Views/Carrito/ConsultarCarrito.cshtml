@@ -1,1 +1,58 @@
-﻿
+﻿@model List<KN_WEB.EntityFramework.sp_ObtenerServiciosCarrito_Result>
+
+<div class="row">
+    <div class="col-12">
+        <div class="section-title mb-3 d-flex justify-content-between align-items-center">
+            <h4>Mi Carrito</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style">
+
+            <table id="tablaCarrito" class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th># Servicio</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Fecha</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Video</th>
+                        <th>Fecha Carrito</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ConsecutivoServicio</td>
+                            <td>@item.Nombre</td>
+                            <td>@item.Precio.ToString("N2")</td>
+                            <td>@item.FechaDisponible.ToString("dd/MM/yyyy")</td>
+                            <td>@item.HoraInicio</td>
+                            <td>@item.HoraFin</td>
+                            <td><iframe width="200" height="125" frameborder="0" allowfullscreen style="display:block;" src="@item.Video"></iframe></td>
+                            <td>@item.FechaHoraCarrito.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                            <td>
+
+                                <a class="btn btn-danger btn-sm" title="Remover"
+                                   href="@Url.Action("Eliminar","Carrito", new { q = @item.Consecutivo })">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Template/js/funciones/consultaCarrito.js"></script>

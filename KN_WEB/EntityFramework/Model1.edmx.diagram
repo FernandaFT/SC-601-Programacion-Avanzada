@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="51f265ebd7a444d5819056a8718361a7" Name="Diagram1">
+      <Diagram DiagramId="70420c14db3249f7a6b2a74d191c2c88" Name="Diagram1">
         <EntityTypeShape EntityType="KN_DBModel.tCarrito" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KN_DBModel.tHorario" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KN_DBModel.tRol" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />

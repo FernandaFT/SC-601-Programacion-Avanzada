@@ -80,6 +80,15 @@ namespace KN_WEB.EntityFramework
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarUsuario", identificacionParameter, contrasennaParameter, nombreParameter, correoElectronicoParameter);
         }
     
+        public virtual ObjectResult<sp_ObtenerServiciosCarrito_Result> sp_ObtenerServiciosCarrito(Nullable<int> consecutivo)
+        {
+            var consecutivoParameter = consecutivo.HasValue ?
+                new ObjectParameter("Consecutivo", consecutivo) :
+                new ObjectParameter("Consecutivo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ObtenerServiciosCarrito_Result>("sp_ObtenerServiciosCarrito", consecutivoParameter);
+        }
+    
         public virtual ObjectResult<sp_ObtenerServiciosConHorariosDisponibles_Result> sp_ObtenerServiciosConHorariosDisponibles()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ObtenerServiciosConHorariosDisponibles_Result>("sp_ObtenerServiciosConHorariosDisponibles");

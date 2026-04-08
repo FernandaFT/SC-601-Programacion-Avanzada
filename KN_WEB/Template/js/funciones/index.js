@@ -1,27 +1,44 @@
 ﻿function AgregarAlCarrito(button) {
-  const servicioId = button.getAttribute('data-servicio');
-  const select = document.querySelector(`select[data-servicio="${servicioId}"]`);
-  const selectedOption = select.options[select.selectedIndex];
+    const servicioId = button.getAttribute('data-servicio');
+    const select = document.querySelector(`select[data-servicio="${servicioId}"]`);
+    const selectedOption = select.options[select.selectedIndex];
+    const horarioId = selectedOption.value;
 
-  if (!selectedOption.value) {
-    alert("Por favor selecciona un horario");
-    return;
-  }
+    $.ajax({
+        url: '/Carrito/GuardarServicioCarrito',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            "servicioId": servicioId,
+            "horarioId": horarioId
+        },
+        success: function (response) {
 
-  const horarioId = selectedOption.value;
+            let icono = "success";
+            if (response.codigo == -1) {
+                icono = "warning"
+            }
 
-  $.ajax({
-    url: '/Carrito/GuardarServicioCarrito',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-      "servicioId": servicioId,
-      "horarioId": horarioId
-    },
-    success: function (response) {
-      alert(response);
-      location.reload();
-    }
-  });
+            Swal.fire({
+                icon: icono,
+                title: "Información",
+                text: response.mensaje,
+                showDenyButton: false,
+                showCancelButton: false,
+                confirmButtonText: "Ok",
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    if (response.codigo == 0) {
+                        location.reload();
+                    }
+
+                }
+            });
+
+        }
+    });
 
 }

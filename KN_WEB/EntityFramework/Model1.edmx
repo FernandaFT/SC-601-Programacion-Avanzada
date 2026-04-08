@@ -119,6 +119,9 @@
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_ObtenerServiciosCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Consecutivo" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_ObtenerServiciosConHorariosDisponibles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ValidarCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
@@ -295,6 +298,9 @@
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_ObtenerServiciosCarrito" ReturnType="Collection(KN_DBModel.sp_ObtenerServiciosCarrito_Result)">
+            <Parameter Name="Consecutivo" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_ObtenerServiciosConHorariosDisponibles" ReturnType="Collection(KN_DBModel.sp_ObtenerServiciosConHorariosDisponibles_Result)" />
           <FunctionImport Name="ValidarCorreo" ReturnType="Collection(KN_DBModel.ValidarCorreo_Result)">
             <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
@@ -308,6 +314,20 @@
           <Property Type="Int32" Name="ConsecutivoRol" Nullable="false" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ImagenUsuario" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="sp_ObtenerServiciosCarrito_Result">
+          <Property Type="Int32" Name="Consecutivo" Nullable="false" />
+          <Property Type="Int32" Name="ConsecutivoUsuario" Nullable="false" />
+          <Property Type="Int32" Name="ConsecutivoServicio" Nullable="false" />
+          <Property Type="DateTime" Name="FechaHoraCarrito" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ConsecutivoHorario" Nullable="false" />
+          <Property Type="Int32" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="Precio" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Video" Nullable="false" MaxLength="500" />
+          <Property Type="DateTime" Name="FechaDisponible" Nullable="false" />
+          <Property Type="String" Name="HoraInicio" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="HoraFin" Nullable="false" MaxLength="5" />
         </ComplexType>
         <ComplexType Name="sp_ObtenerServiciosConHorariosDisponibles_Result">
           <Property Type="Int32" Name="Consecutivo" Nullable="false" />
@@ -406,6 +426,24 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RegistrarUsuario" FunctionName="KN_DBModel.Store.RegistrarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_ObtenerServiciosCarrito" FunctionName="KN_DBModel.Store.sp_ObtenerServiciosCarrito">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KN_DBModel.sp_ObtenerServiciosCarrito_Result">
+                <ScalarProperty Name="Consecutivo" ColumnName="Consecutivo" />
+                <ScalarProperty Name="ConsecutivoUsuario" ColumnName="ConsecutivoUsuario" />
+                <ScalarProperty Name="ConsecutivoServicio" ColumnName="ConsecutivoServicio" />
+                <ScalarProperty Name="FechaHoraCarrito" ColumnName="FechaHoraCarrito" />
+                <ScalarProperty Name="ConsecutivoHorario" ColumnName="ConsecutivoHorario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Video" ColumnName="Video" />
+                <ScalarProperty Name="FechaDisponible" ColumnName="FechaDisponible" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_ObtenerServiciosConHorariosDisponibles" FunctionName="KN_DBModel.Store.sp_ObtenerServiciosConHorariosDisponibles">
             <ResultMapping>
               <ComplexTypeMapping TypeName="KN_DBModel.sp_ObtenerServiciosConHorariosDisponibles_Result">
