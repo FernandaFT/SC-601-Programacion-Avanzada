@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+﻿using System.Configuration;
 using System.Net;
-using System.Net.Http;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web.Http;
 
 namespace KN_WEB.Services
 {
@@ -35,7 +30,7 @@ namespace KN_WEB.Services
                     {
                         smtp.Send(mail);
                     }
-                    
+
                 }
             }
         }

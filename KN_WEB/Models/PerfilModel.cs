@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace KN_WEB.Models
+﻿namespace KN_WEB.Models
 {
     public class PerfilModel
     {

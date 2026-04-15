@@ -3,13 +3,8 @@ using KN_WEB.Filters;
 using KN_WEB.Models;
 using KN_WEB.Services;
 using System;
-using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Text;
 using System.Web.Mvc;
 
 namespace KN_WEB.Controllers
